@@ -5,60 +5,57 @@
 //max time of 6 hours
 //----------------------------------------
 
-const prompt = require('prompt-sync')({sigint:true});
+
 
 //set random fish caught by fisher
 const randomSelection = () => {
     const randomFish = [{name:'nemo', weight: 0, cost: 0}, {name:'dory', weight:0, cost: 0},
-{name:'bruce', weight: 0, cost: 0}, {name:'jaws', weight:0, cost: 0}];
+{name:'bruce', weight: 0, cost: 0}, {name:'jaws', weight:0, cost: 0}, {name:'marlin', weight:0, cost: 0} , {name:'orca', weight:0, cost: 0}, 
+{name:'flipper', weight:0, cost: 0}, {name:'bass', weight:0, cost: 0}, {name:'tuna', weight:0, cost: 0}, {name:'red snapper', weight:0, cost: 0}];
     let randomIdx = Math.floor(Math.random() * randomFish.length)
     return randomFish[randomIdx]
 }
-// console.log(randomFishWeight(randomFish))
+// console.log(randomFishWeight())
 
-//***Fish for 1 hour***
+//***Fish for x amount of times hour***
 function fishingRounds() {
-    //set identify random fish to "catch"
-    // const chalk = require('chalk');
+    const prompt = require('prompt-sync')({sigint:true});
+    const chalk = require('chalk')
     //running counts
     let weightTotal = 0;
     let priceTotal = 0;
     let roundTotal = 1;
     let keptTotal = [];
     //start the game
-    console.log('Youve entered a fishing tournament! You have 6 Hours to catch as many fish totaling under 10 lbs!')
+    console.log(chalk.magenta('Youve entered a fishing tournament! You have 6 Hours to catch as many fish totaling under 10 lbs!'))
     //set limit at 6 hours
     while (roundTotal < 6) {
         //display the current time
-        console.log(`the Time is ${roundTotal}:00 PM`)
-        // console.log('random fish added', fishReeledIn)
-        //give random weight/random price
+        console.log(chalk.greenBright(`the Time is ${roundTotal}:00 PM`))
+        //set identify random fish to variable
         let fishReeledIn = randomSelection()
-        fishReeledIn.weight = Math.random()* 10 
-        fishReeledIn.cost = Math.random()* 100
-        // console.log('random weight added',fishReeledIn)
-        //display what fish caught to user
-        console.log(`You caught a ${fishReeledIn.name}, weighing in at ${fishReeledIn.weight}, with a value of $${fishReeledIn.cost}`)
-        //add fish to 
-        // let caughtTotal = [];
-        // caughtTotal.push(fishReeledIn);
-        //if weight of current fish > total 
+        //give fish random weight/random price
+        fishReeledIn.weight = Math.random() * 15 + 1
+        fishReeledIn.cost = Math.random() * 100
+        //display what fish is "caught" to user
+        console.log(chalk.yellow(`You caught a ${fishReeledIn.name}, weighing in at ${fishReeledIn.weight} lbs, with a value of $${fishReeledIn.cost}`))
+        //cond statement if fish weight doesnt exceed the cap
         if(weightTotal + fishReeledIn.weight > 10){
-            // let overLimit = Number(prompt('You went over 10 lbs! Removing current fish: hit "1" to continue: '));
-            console.log('you went over 10 lbs! this fish will be released when asked')  
-            roundTotal ++; 
+            console.log(chalk.red('you went over 10 lbs! this fish will be RELEASED when asked'))  
         } 
-        
-        let catchRelease = prompt('catch or release?("c", "r"): ');
+        //ask user for action
+        let catchRelease = prompt('Catch or release?("c", "r"): ');
         if(catchRelease === 'c') {
+            //add running totals and add fish to fish kept
             weightTotal = weightTotal + fishReeledIn.weight
             priceTotal = priceTotal + fishReeledIn.cost
             keptTotal.push(fishReeledIn)
         } else if(catchRelease === 'r'){
-            // caughtTotal = caughtTotal.splice(caughtTotal[caughtTotal.length-1], 1);
-            console.log('Trew fish back in the sea!')
+            //note fish was not added
+            console.log(chalk.cyan('Trew fish back in the sea!'))
         } else {
-            console.log('ERROR-INVALID ENTRY')
+            //log invalid entry
+            console.log(chalk.white('ERROR-INVALID ENTRY'))
         }
         
         console.log(`So far you have caught: ${keptTotal.length} fish, ${weightTotal}lbs, $${priceTotal}`)
@@ -68,14 +65,14 @@ function fishingRounds() {
         
         
     }
-    console.log(`The time is 7 pm, times up!`)
-    console.log(`You caught ${keptTotal.length} fish:`)
+    console.log(chalk.red(`The time is 7 pm, times up!`))
+    console.log(chalk.green(`You caught ${keptTotal.length} fish: `))
     for(let j = 0 ; j < keptTotal.length; j++) {
-        console.log(`* ${keptTotal[j].name}, ${keptTotal[j].weight} ${keptTotal[j].cost}`)
+        console.log(chalk.blue(`* ${keptTotal[j].name}, ${keptTotal[j].weight} lbs, $${keptTotal[j].cost}`))
     }
     
-    console.log(`Total Weight: ${weightTotal}`)
-    console.log(`Total Value: ${priceTotal}`)
+    console.log(chalk.blueBright(`Total Weight: ${weightTotal}lbs.`))
+    console.log(chalk.yellowBright(`Total Value: $${priceTotal}`))
     
 
 }
