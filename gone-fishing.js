@@ -19,18 +19,18 @@ const randomSelection = () => {
 //***Fish for 1 hour***
 function fishingRounds() {
     //set identify random fish to "catch"
-    const chalk = require('chalk');
+    // const chalk = require('chalk');
     //running counts
     let weightTotal = 0;
     let priceTotal = 0;
     let roundTotal = 1;
     let keptTotal = [];
     //start the game
-    console.log(chalk.pink('Youve entered a fishing tournament! You have 6 Hours to catch as many fish totaling under 10 lbs!'))
+    console.log('Youve entered a fishing tournament! You have 6 Hours to catch as many fish totaling under 10 lbs!')
     //set limit at 6 hours
     while (roundTotal < 6) {
         //display the current time
-        console.log(chalk.yellow(`the Time is ${roundTotal}:00 PM`))
+        console.log(`the Time is ${roundTotal}:00 PM`)
         // console.log('random fish added', fishReeledIn)
         //give random weight/random price
         let fishReeledIn = randomSelection()
@@ -38,14 +38,14 @@ function fishingRounds() {
         fishReeledIn.cost = Math.random()* 100
         // console.log('random weight added',fishReeledIn)
         //display what fish caught to user
-        console.log(chalk.green(`You caught a ${fishReeledIn.name}, weighing in at ${fishReeledIn.weight}, with a value of $${fishReeledIn.cost}`))
+        console.log(`You caught a ${fishReeledIn.name}, weighing in at ${fishReeledIn.weight}, with a value of $${fishReeledIn.cost}`)
         //add fish to 
         // let caughtTotal = [];
         // caughtTotal.push(fishReeledIn);
         //if weight of current fish > total 
         if(weightTotal + fishReeledIn.weight > 10){
             // let overLimit = Number(prompt('You went over 10 lbs! Removing current fish: hit "1" to continue: '));
-            console.log(chalk.red('you went over 10 lbs! this fish will be released when asked'))  
+            console.log('you went over 10 lbs! this fish will be released when asked')  
             roundTotal ++; 
         } 
         
